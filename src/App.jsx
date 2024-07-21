@@ -5,13 +5,8 @@ import { useMovies } from './hooks/useMovies'
 import { useSearch } from './hooks/useSearch'
 
 const App = () => {
-  const { movies } = useMovies();
   const { query, setQuery, error } = useSearch();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ query });
-  }
+  const { movies, getMovies, loadingMovies, errorMovies } = useMovies({ query });
 
   const handleInputChange = (e) => {
     const newQuery = e.target.value;
@@ -19,10 +14,15 @@ const App = () => {
     setQuery(newQuery);
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getMovies()
+  }
+
   return (
     <div className='page'>
       <header>
-        <h1 style={{ textAlign: 'center' }}>Movie Finder</h1>
+        <h1>Movie Finder</h1>
         <form className='form' onSubmit={handleSubmit}>
           <input
             value={query}
@@ -36,7 +36,14 @@ const App = () => {
       </header>
 
       <main>
-        <Movies movies={movies} />
+        {
+          loadingMovies
+            ? <h4>Loading Movies...</h4>
+            : errorMovies
+              ? <h4>{errorMovies}</h4>
+              : <Movies movies={movies} />
+
+        }
       </main>
     </div >
   )
