@@ -33,6 +33,18 @@ input {
     max-width: 30rem;
 }
 
+.sortContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25px;
+}
+
+.sortControl {
+    min-width: min-content;
+}
+
 .movies {
     width: 100%;
     list-style: none;
